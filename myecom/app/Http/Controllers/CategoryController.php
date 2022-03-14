@@ -18,6 +18,4 @@ class CategoryController extends Controller
     {
         return view('admin/mange_category');
     }
-
-
 }

@@ -1,9 +1,9 @@
 @extends('admin/layout')
 @section('container')
     <h1>Category</h1>
-   <a href="manage_category">
-       <button type="button" class="btn btn-success m-t-20">Add Category</button>
-   </a>
+    <a href="manage_category">
+        <button type="button" class="btn btn-success m-t-20">Add Category</button>
+    </a>
     <div class="row m-t-30">
         <div class="col-md-12">
             <!-- DATA TABLE-->

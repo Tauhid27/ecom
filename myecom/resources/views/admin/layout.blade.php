@@ -97,7 +97,7 @@
                                     <div class="account-item clearfix js-item-menu">
 
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#">john doe</a>
+                                            <a class="js-acc-btn" href="#">Welcome Admin</a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
 
@@ -108,7 +108,7 @@
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__footer">
-                                                <a href="#">
+                                                <a href="logout">
                                                     <i class="zmdi zmdi-power"></i>Logout</a>
                                             </div>
                                         </div>
@@ -126,8 +126,8 @@
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
 
-                            @section('container')
-                            @show
+                        @section('container')
+                        @show
 
 
                     </div>

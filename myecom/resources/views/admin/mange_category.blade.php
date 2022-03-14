@@ -1,9 +1,9 @@
 @extends('admin/layout')
 @section('container')
     <h1>Manage Category</h1>
-   <a href="category">
-       <button type="button" class="btn btn-success m-t-20">Back</button>
-   </a>
+    <a href="category">
+        <button type="button" class="btn btn-success m-t-20">Back</button>
+    </a>
     <div class="row m-t-30">
         <div class="col-md-12">
             <div class="row">
@@ -18,12 +18,17 @@
                             <form action="" method="post" novalidate="novalidate">
                                 <div class="form-group">
                                     <label for="cc-payment" class="control-label mb-1">Payment amount</label>
-                                    <input id="cc-pament" name="cc-payment" type="text" class="form-control" aria-required="true" aria-invalid="false" value="100.00">
+                                    <input id="cc-pament" name="cc-payment" type="text" class="form-control"
+                                        aria-required="true" aria-invalid="false" value="100.00">
                                 </div>
                                 <div class="form-group has-success">
                                     <label for="cc-name" class="control-label mb-1">Name on card</label>
-                                    <input id="cc-name" name="cc-name" type="text" class="form-control cc-name valid" data-val="true" data-val-required="Please enter the name on card" autocomplete="cc-name" aria-required="true" aria-invalid="false" aria-describedby="cc-name-error">
-                                    <span class="help-block field-validation-valid" data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
+                                    <input id="cc-name" name="cc-name" type="text" class="form-control cc-name valid"
+                                        data-val="true" data-val-required="Please enter the name on card"
+                                        autocomplete="cc-name" aria-required="true" aria-invalid="false"
+                                        aria-describedby="cc-name-error">
+                                    <span class="help-block field-validation-valid" data-valmsg-for="cc-name"
+                                        data-valmsg-replace="true"></span>
                                 </div>
 
 
@@ -43,4 +48,3 @@
         </div>
     </div>
 @endsection
-
