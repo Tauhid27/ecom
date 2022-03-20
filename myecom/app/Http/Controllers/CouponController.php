@@ -57,4 +57,12 @@ class CouponController extends Controller
         $request->session()->flash('message', 'Coupon deleted sucessfully');
         return redirect('admin/coupon');
     }
+    public function  status(Request $request, $status,$id)
+    {
+        $model = Coupon::find($id);
+        $model->status=$status;
+        $model->save();
+        $request->session()->flash('message', 'Status updated sucessfully');
+        return redirect('admin/coupon');
+    }
 }
