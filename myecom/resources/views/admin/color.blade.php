@@ -1,10 +1,17 @@
 @extends('admin/layout')
-@section('page_title','Color')
-@section('color_select','active')
+@section('page_title', 'Color')
+@section('color_select', 'active')
 @section('container')
-    {{ session('message') }}
+    @if (session()->has('message'))
+        <div class="sufee-alert alert with-close alert-info alert-dismissible fade show">
+            {{ session('message') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+    @endif
     <h1>Category</h1>
-    <a href="{{url('admin/color/manage_color')}}">
+    <a href="{{ url('admin/color/manage_color') }}">
         <button type="button" class="btn btn-success m-t-20">Add Color</button>
     </a>
     <div class="row m-t-30">
@@ -30,14 +37,14 @@
                                     <a href="{{ url('admin/color/manage_color') }}/{{ $list->id }}">
                                         <button type="button" class="btn btn-success">Edit</button>
                                     </a>
-                                    @if($list->status==1)
-                                    <a href="{{ url('admin/color/status/0') }}/{{ $list->id }}">
-                                        <button type="button" class="btn btn-primary">Active</button>
-                                    </a>
-                                    @elseif($list->status==0)
-                                    <a href="{{ url('admin/color/status/1') }}/{{ $list->id }}">
-                                        <button type="button" class="btn btn-warning">Deactive</button>
-                                    </a>
+                                    @if ($list->status == 1)
+                                        <a href="{{ url('admin/color/status/0') }}/{{ $list->id }}">
+                                            <button type="button" class="btn btn-primary">Active</button>
+                                        </a>
+                                    @elseif($list->status == 0)
+                                        <a href="{{ url('admin/color/status/1') }}/{{ $list->id }}">
+                                            <button type="button" class="btn btn-warning">Deactive</button>
+                                        </a>
                                     @endif
                                     <a href="{{ url('admin/color/delete/') }}/{{ $list->id }}">
                                         <button type="button" class="btn btn-danger">Delete</button>
