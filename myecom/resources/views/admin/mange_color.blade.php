@@ -1,9 +1,9 @@
 @extends('admin/layout')
-@section('page_title','Manage Size')
-@section('size_select','active')
+@section('page_title','Manage Color')
+@section('color_select','active')
 @section('container')
     <h1>Manage Size</h1>
-    <a href="{{ url('admin/size') }}">
+    <a href="{{ url('admin/color') }}">
         <button type="button" class="btn btn-success m-t-20">Back</button>
     </a>
     <div class="row m-t-30">
@@ -16,15 +16,15 @@
                         <div class="card-body">
 
 
-                            <form action="{{ route('size.manage_size_process') }}" method="post">
+                            <form action="{{ route('color.manage_color_process') }}" method="post">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="size" class="control-label mb-1">Size</label>
-                                    <input id="size" value="{{ $size }}" name="size" type="text"
+                                    <label for="color" class="control-label mb-1">Color</label>
+                                    <input id="color" value="{{ $color }}" name="color" type="text"
                                         class="form-control" aria-required="true" aria-invalid="false">
-                                    @error('size')
+                                    @error('color')
                                         <div class="alert alert-warning" role="alert">
-                                            {{ $message}}
+                                            {{$message}}
                                         </div>
                                     @enderror
                                 </div>
