@@ -35,6 +35,14 @@ class ProductController extends Controller
             $result['status'] = $arr['0']->status;
             $result['id'] = $arr['0']->id;
             $result['productAttrArr'] = DB::table('products_attr')->where(['products_id' => $id])->get();
+
+            $productImagesArr = DB::table('product_images')->where(['products_id' => $id])->get();
+            if(!isset($productImagesArr[0])){
+                $result['productImagesArr']['0']['id']='';
+                $result['productImagesArr']['0']['images']='';
+            }else{
+                $result['productImagesArr']=$productImagesArr;
+            }
         } else {
             $result['category_id'] = '';
             $result['name'] = '';
@@ -60,6 +68,9 @@ class ProductController extends Controller
             $result['productAttrArr'][0]['qty'] = '';
             $result['productAttrArr'][0]['size_id'] = '';
             $result['productAttrArr'][0]['color_id'] = '';
+
+            $result['productImagesArr']['0']['id']='';
+            $result['productImagesArr']['0']['images']='';
         }
         $result['category'] = DB::table('categories')->where(['status' => 1])->get();
         $result['sizes'] = DB::table('sizes')->where(['status' => 1])->get();
@@ -87,7 +98,7 @@ class ProductController extends Controller
             'image' => $image_validation,
             'slug' => 'required|unique:products,slug,' . $request->post('id'),
             'attr_image.*' =>'mimes:jpeg,jpg,png',
-            // 'images.*' =>'mimes:jpeg,jpg,png',
+            'images.*' =>'mimes:jpeg,jpg,png',
         ]);
         $paidArr = $request->post('paid');
         $skuArr = $request->post('sku');
@@ -178,6 +189,27 @@ class ProductController extends Controller
         }
 
         //Product Attr End
+
+        /* PRODUCT IMAGES  START*/
+      $piiArr = $request->post('piid');
+      foreach ($piiArr as $key => $val) {
+        $productIamgerArr['products_id'] = $pid;
+        if($request->hasFile("images.$key")){
+            $rand=rand('111111111','999999999');
+            $images=$request->file("images.$key");
+            $ext = $images->extension();
+            $image_name = $rand . '.' . $ext;
+            $request->file("images.$key")->storeAs('/public/media', $image_name);
+            $productIamgerArr['images'] =$image_name;
+        }
+        if($piiArr[$key]!=''){
+            DB::table('product_images')->where(['id'=>$piiArr[$key]])->update($productIamgerArr);
+        }else{
+            DB::table('product_images')->insert($productIamgerArr);
+        }
+
+      }
+         /* PRODUCT IMAGES  END*/
         $request->session()->flash('message', $msg);
         return  redirect('admin/product');
 
@@ -190,10 +222,15 @@ class ProductController extends Controller
         return redirect('admin/product');
     }
 
-    public function  product_attr_delete(Request $request, $paid, $pid)
+    public function  product_attr_delete(Request $request, $piid, $pid)
     {
-        DB::table('products_attr')->where(['id' => $paid])->delete();
-        return redirect('admin/product/manage_product/' . $pid);
+        DB::table('products_attr')->where(['id' => $piid])->delete();
+        return redirect('admin/product/manage_product/'.$pid);
+    }
+    public function product_images_delete(Request $request, $piid, $pid)
+    {
+        DB::table('product_images')->where(['id' => $piid])->delete();
+        return redirect('admin/product/manage_product/'. $pid);
     }
 
 
