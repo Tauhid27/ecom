@@ -75,6 +75,7 @@ class ProductController extends Controller
         $result['category'] = DB::table('categories')->where(['status' => 1])->get();
         $result['sizes'] = DB::table('sizes')->where(['status' => 1])->get();
         $result['colors'] = DB::table('colors')->where(['status' => 1])->get();
+        $result['brands'] = DB::table('brands')->where(['status' => 1])->get();
         // echo '<pre>';
         // print_r($result);
         // die();
@@ -157,9 +158,9 @@ class ProductController extends Controller
 
             $productAttrArr['products_id'] = $pid;
             $productAttrArr['sku'] = $skuArr[$key];
-            $productAttrArr['mrp'] = $mrpArr[$key];
-            $productAttrArr['price'] = $priceArr[$key];
-            $productAttrArr['qty'] = $qtyArr[$key];
+            $productAttrArr['mrp'] =(int)$mrpArr[$key];
+            $productAttrArr['price'] =(int)$priceArr[$key];
+            $productAttrArr['qty'] = (int)$qtyArr[$key];
             if ($size_idArr[$key] == '') {
                 $productAttrArr['size_id'] = 0;
             } else {
