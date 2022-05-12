@@ -37,6 +37,7 @@
     <a href="{{ url('admin/product') }}">
         <button type="button" class="btn btn-success m-t-20">Back</button>
     </a>
+    <script src="{{url('ckeditor/ckeditor.js')}}"></script>
     <div class="row m-t-30">
         <div class="col-md-12">
             <form action="{{ route('product.manage_product_process') }}" method="post" enctype="multipart/form-data">
@@ -151,9 +152,83 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="warranty" class="control-label mb-1">Warranty</label>
-                                    <textarea id="warranty" name="warranty" type="warranty" class="form-control" aria-required="true" aria-invalid="false"
-                                        required>{{ $warranty }}</textarea>
+                                    <textarea id="warranty" name="warranty" type="text" class="form-control" aria-required="true" aria-invalid="false" required>{{$warranty}}</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <label for="lead_time" class="control-label mb-1">Lead Time</label>
+                                            <input id="lead_time" value="{{$lead_time}}" name="lead_time" type="text" class="form-control" aria-required="true" aria-invalid="false">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="tax_id" class="control-label mb-1">Tax</label>
+                                            <select id="tax_id" name="tax_id" type="text" class="form-control" aria-required="true" aria-invalid="false" required>
+                                                <option value="">Select Tax</option>
+                                                @foreach($taxes as $list)
+                                                @if($tax_id==$list->id)
+                                                <option selected value="{{$list->id}}">
+                                                    @else
+                                                <option value="{{$list->id}}">
 
+                                                    @endif
+                                                    {{$list->tax_desc}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="is_promo" class="control-label mb-1">Is Promo</label>
+                                            <select id="is_promo" name="is_promo" type="text" class="form-control" required>
+                                                @if($is_promo=='1')
+                                                <option value="1" selected>Yes</option>
+                                                <option value="0">No</option>
+                                                @else
+                                                <option value="1">Yes</option>
+                                                <option value="0" selected>No</option>
+                                                @endif
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="is_featured" class="control-label mb-1">Is Featured</label>
+                                            <select id="is_featured" name="is_featured" type="text" class="form-control" required>
+                                                @if($is_featured=='1')
+                                                <option value="1" selected>Yes</option>
+                                                <option value="0">No</option>
+                                                @else
+                                                <option value="1">Yes</option>
+                                                <option value="0" selected>No</option>
+                                                @endif
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="is_discounted" class="control-label mb-1">Is Discounted</label>
+                                            <select id="is_discounted" name="is_discounted" type="text" class="form-control" required>
+                                                @if($is_discounted=='1')
+                                                <option value="1" selected>Yes</option>
+                                                <option value="0">No</option>
+                                                @else
+                                                <option value="1">Yes</option>
+                                                <option value="0" selected>No</option>
+                                                @endif
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="is_tranding" class="control-label mb-1">Is Tranding</label>
+                                            <select id="is_tranding" name="is_tranding" type="text" class="form-control" required>
+                                                @if($is_tranding=='1')
+                                                <option value="1" selected>Yes</option>
+                                                <option value="0">No</option>
+                                                @else
+                                                <option value="1">Yes</option>
+                                                <option value="0" selected>No</option>
+                                                @endif
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
 
 
@@ -392,5 +467,8 @@
         function remove_image_more(loop_image_count) {
             jQuery('.product_images_' + loop_image_count).remove();
         }
+        CKEDITOR.replace('short_desc');
+        CKEDITOR.replace('desc');
+        CKEDITOR.replace('technical_specification');
     </script>
 @endsection
