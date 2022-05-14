@@ -37,7 +37,7 @@
                                 <td>{{ $list->slug }}</td>
                                 <td>
                                     @if($list->image!='')
-                                    <img width="100px" src="{{asset('storage/media/'.$list->image)}}" >
+                                    <img style="width: 100px;height:110px" src="{{asset('storage/media/'.$list->image)}}">
                                     @endif
                                 </td>
                                 <td>

@@ -68,13 +68,15 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="image" class="control-label mb-1">Image</label>
-                                    <input id="image" name="image" type="file" class="form-control" aria-required="true"
-                                        aria-invalid="false" {{ $image_required }}>
+                                    <input id="image" name="image" type="file" class="form-control" aria-required="true" aria-invalid="false" {{$image_required}}>
                                     @error('image')
-                                        <div class="alert alert-warning" role="alert">
-                                            {{ $message }}
-                                        </div>
+                                    <div class="alert alert-danger">
+                                        {{ $message }}
+                                    </div>
                                     @enderror
+                                        @if($image!='')
+                                        <a href="{{asset('storage/media/'.$image)}}" target="_blank"> <img style="width: 100px;height:110px" src="{{asset('storage/media/'.$image)}}"></a>
+                                        @endif
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
