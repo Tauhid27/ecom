@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -60,6 +61,13 @@ class CategoryController extends Controller
         }
 
         if ($request->hasfile('category_image')) {
+            if ($request->post('id') > 0) {
+                $arrImage = DB::table('categories')->where(['id' => $request->post('id')])->get();
+                if (Storage::exists('/public/media/category/' . $arrImage[0]->category_image)) {
+                    Storage::delete('/public/media/category/' . $arrImage[0]->category_image);
+                }
+            }
+
             $image = $request->file('category_image');
             $ext = $image->extension();
             $image_name = time() . '.' . $ext;

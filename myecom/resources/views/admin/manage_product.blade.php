@@ -369,7 +369,7 @@
                                                 <label for="attr_image" class="control-label mb-1">Image</label>
                                                 <input id="attr_image" name="attr_image[]" type="file"
                                                     class="form-control" aria-required="true" aria-invalid="false"
-                                                    required>
+                                                   >
                                                 @if ($pArr['attr_image'] != '')
                                                     <img width="100px"
                                                         src="{{ asset('storage/media/' . $pArr['attr_image']) }}">
@@ -440,7 +440,7 @@
             html +=
                 '<div class="col-md-2"><label for="qty" class="control-label mb-1">Quantity</label><input id="qty" value="" name="qty[]" type="text" class="form-control"aria-required="true" aria-invalid="false" required></div>';
             html +=
-                '<div class="col-md-4"><label for="attr_image" class="control-label mb-1">Image</label><input id="attr_image" value="" name="attr_image[]" type="file" class="form-control"aria-required="true" aria-invalid="false" required></div>';
+                '<div class="col-md-4"><label for="attr_image" class="control-label mb-1">Image</label><input id="attr_image" value="" name="attr_image[]" type="file" class="form-control"aria-required="true" aria-invalid="false" ></div>';
 
             html +=
                 '<div class="col-md-2"><label for="images" class="control-label mb-1">&nbsp;&nbsp;&nbsp;</label><button type="button" class="btn btn-danger btn-lg" onclick=remove_more("' +

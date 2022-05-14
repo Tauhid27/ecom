@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 class ProductController extends Controller
 {
 
-     public function index()
+    public function index()
     {
 
         $result['data'] = Product::all();
@@ -207,20 +207,22 @@ class ProductController extends Controller
                 $productAttrArr['color_id'] = $color_idArr[$key];
             }
 
-            if ($request->hasFile("attr_image.$key")) {
-                if ($paidArr[$key] != '') {
-                    $arrImage = DB::table('products_attr')->where(['id' => $paidArr[$key]])->get();
-                    if (Storage::exists('/public//media/' . $arrImage[0]->attr_image)) {
-                        Storage::delete('/public//media/' . $arrImage[0]->attr_image);
+            if($request->hasFile("attr_image.$key")){
+                if($paidArr[$key]!=''){
+                    $arrImage=DB::table('products_attr')->where(['id'=>$paidArr[$key]])->get();
+                    if(Storage::exists('/public/media/'.$arrImage[0]->attr_image)){
+                        Storage::delete('/public/media/'.$arrImage[0]->attr_image);
                     }
                 }
-                $rand = rand('111111111', '999999999');
-                $attr_image = $request->file("attr_image.$key");
-                $ext = $attr_image->extension();
-                $image_name = $rand . '.' . $ext;
-                $request->file("attr_image.$key")->storeAs('/public/media', $image_name);
-                $productAttrArr['attr_image'] = $image_name;
+
+                $rand=rand('111111111','999999999');
+                $attr_image=$request->file("attr_image.$key");
+                $ext=$attr_image->extension();
+                $image_name=$rand.'.'.$ext;
+                $request->file("attr_image.$key")->storeAs('/public/media',$image_name);
+                $productAttrArr['attr_image']=$image_name;
             }
+
             if ($paidArr[$key] != '') {
                 DB::table('products_attr')->where(['id' => $paidArr[$key]])->update($productAttrArr);
             } else {
@@ -299,5 +301,4 @@ class ProductController extends Controller
         $request->session()->flash('message', 'Product status Updated');
         return  redirect('admin/product');
     }
-
 }
