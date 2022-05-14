@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Category;
+use App\Http\Controllers\Controller;
+
+use App\Models\Admin\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -26,6 +28,11 @@ class CategoryController extends Controller
             $result['category_slug'] = $arr['0']->category_slug;
             $result['parent_category_id'] = $arr['0']->parent_category_id;
             $result['category_image'] = $arr['0']->category_image;
+            $result['is_home'] = $arr['0']->is_home;
+            $result['is_home_selected']="";
+            if($arr['0']->is_home==1){
+            $result['is_home_selected'] = "checked";
+            }
             $result['id'] = $arr['0']->id;
             $result['category'] = DB::table('categories')->where('status', 1)->where('id','!=',$id)->get();
 
@@ -34,6 +41,8 @@ class CategoryController extends Controller
             $result['category_slug'] = '';
             $result['parent_category_id'] = '';
             $result['category_image'] = '';
+            $result['is_home'] = '';
+            $result['is_home_selected']="";
             $result['id'] = 0;
             $result['category'] = DB::table('categories')->where('status', 1)->get();
         }
@@ -77,6 +86,10 @@ class CategoryController extends Controller
         $model->category_name = $request->post('category_name');
         $model->category_slug = $request->post('category_slug');
         $model->parent_category_id = $request->post('parent_category_id');
+        $model->is_home=0;
+        if($request->post('is_home')!==null){
+            $model->is_home=1;
+        }
 
         $model->save();
         $request->session()->flash('message', $msg);
