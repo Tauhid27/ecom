@@ -94,7 +94,7 @@
                 <ul class="aa-head-top-nav-right">
                   <li><a href="javascript:void(0)">My Account</a></li>
                   <li class="hidden-xs"><a href="javascript:void(0)">Wishlist</a></li>
-                  <li class="hidden-xs"><a href="javascript:void(0)">My Cart</a></li>
+                  <li class="hidden-xs"><a href="{{url('/cart')}}">My Cart</a></li>
                   <li class="hidden-xs"><a href="javascript:void(0)">Checkout</a></li>
                   <li><a href="" data-toggle="modal" data-target="#login-modal">Login</a></li>
                 </ul>
@@ -328,7 +328,10 @@
   </div>
 
   <!-- jQuery library -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+
+
+  <script src="{{asset('front_assets/js/jquery.min.js')}}"></script>
   <script src="{{asset('front_assets/js/bootstrap.js')}}"></script>
   <script type="text/javascript" src="{{asset('front_assets/js/jquery.smartmenus.js')}}"></script>
   <script type="text/javascript" src="{{asset('front_assets/js/jquery.smartmenus.bootstrap.js')}}"></script>
