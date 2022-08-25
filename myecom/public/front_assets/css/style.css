@@ -4211,4 +4211,7 @@ img {
   .left_cat_active{
     color:#ff6666;
   }
-
+  .field_error{
+    color:red;
+    margin-top:-17px
+  }
