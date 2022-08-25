@@ -102,7 +102,8 @@ class FrontController extends Controller
         $sort_txt="";
         $filter_price_start="";
         $filter_price_end="";
-
+        $color_filter="";
+        $colorFilterArr=[];
         if($request->get('sort')!==null){
             $sort=$request->get('sort');
         }
@@ -134,8 +135,17 @@ class FrontController extends Controller
             if($filter_price_start>0 && $filter_price_end>0){
                 $query=$query->whereBetween('products_attr.price',[$filter_price_start,$filter_price_end]);
             }
+        }
+
+        if($request->get('color_filter')!==null){
+            $color_filter=$request->get('color_filter');
+            $colorFilterArr=explode(":",$color_filter);
+            $colorFilterArr=array_filter($colorFilterArr);
+
+            $query=$query->where(['products_attr.color_id'=>$request->get('color_filter')]);
 
         }
+
         $query=$query->distinct()->select('products.*');
         $query=$query->get();
         $result['product']=$query;
@@ -146,16 +156,20 @@ class FrontController extends Controller
             $query1=$query1->leftJoin('sizes','sizes.id','=','products_attr.size_id');
             $query1=$query1->leftJoin('colors','colors.id','=','products_attr.color_id');
             $query1=$query1->where(['products_attr.products_id'=>$list1->id]);
-
             $query1=$query1->get();
-
             $result['product_attr'][$list1->id]=$query1;
-
         }
+
+        $result['colors']=DB::table('colors')
+        ->where(['status'=>1])
+        ->get();
+
         $result['sort']=$sort;
         $result['sort_txt']=$sort_txt;
         $result['filter_price_start']=$filter_price_start;
         $result['filter_price_end']=$filter_price_end;
+        $result['color_filter']=$color_filter;
+        $result['colorFilterArr']=$colorFilterArr;
         return view('front.category',$result);
     }
     public function product(Request $request,$slug)

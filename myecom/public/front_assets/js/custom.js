@@ -458,5 +458,17 @@ jQuery(function($){
     jQuery('#filter_price_start').val(jQuery('#skip-value-lower').html());
     jQuery('#filter_price_end').val(jQuery('#skip-value-upper').html());
     jQuery('#categoryFilter').submit();
+  }
 
+  function setColor(color,type){
+    var color_str=jQuery('#color_filter').val();
+    if(type==1){
+      var new_color_str=color_str.replace(color+':','');
+      jQuery('#color_filter').val(new_color_str);
+    }else{
+      jQuery('#color_filter').val(color+':'+color_str);
+      jQuery('#categoryFilter').submit();
+    }
+
+    jQuery('#categoryFilter').submit();
   }
