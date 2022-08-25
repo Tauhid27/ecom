@@ -84,4 +84,5 @@ function getAddToCartTotalItem(){
 	return $result;
 
 }
+
 ?>
