@@ -124,4 +124,11 @@ Route::get('category/{id}',[FrontController::class,'category']);
 Route::get('search/{str}',[FrontController::class,'search']);
 Route::get('registration',[FrontController::class,'registration']);
 Route::post('registration_process',[FrontController::class,'registration_process'])->name('registration.registration_process');
+Route::post('login_process',[FrontController::class,'login_process'])->name('login.login_process');
+Route::get('logout', function () {
+    session()->forget('FRONT_USER_LOGIN');
+    session()->forget('FRONT_USER_ID');
+    session()->forget('FRONT_USER_NAME');
+    return redirect('/');
+});
 //FRONT CONTROLLERS CODE END
