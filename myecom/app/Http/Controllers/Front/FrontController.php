@@ -164,6 +164,12 @@ class FrontController extends Controller
         ->where(['status'=>1])
         ->get();
 
+
+        $result['categories_left']=DB::table('categories')
+        ->where(['status'=>1])
+        ->get();
+
+        $result['slug']=$slug;
         $result['sort']=$sort;
         $result['sort_txt']=$sort_txt;
         $result['filter_price_start']=$filter_price_start;
