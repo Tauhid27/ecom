@@ -202,7 +202,7 @@
 
           <div class="navbar-collapse collapse">
             <!-- Left nav -->
-    {!! getTopNavCat() !!}
+           {!! getTopNavCat() !!}
           </div><!--/.nav-collapse -->
         </div>
       </div>
