@@ -295,7 +295,7 @@ class FrontController extends Controller
     public function cart(Request $request)
     {
         if($request->session()->has('FRONT_USER_LOGIN')){
-            $uid=$request->session()->get('FRONT_USER_LOGIN');
+            $uid=$request->session()->get('FRONT_USER_ID');
             $user_type="Reg";
         }else{
             $uid=getUserTempId();
@@ -359,7 +359,7 @@ class FrontController extends Controller
             "name"=>'required',
             "email"=>'required|email|unique:customers,email',
             "password"=>'required',
-            "mobile"=>'required|numeric|digits:10',
+            "mobile"=>'required|numeric|digits:11',
        ]);
 
        if(!$valid->passes()){
@@ -412,8 +412,6 @@ class FrontController extends Controller
                 return response()->json(['status'=>"error",'msg'=>'Your account has been deactivated']);
             }
 
-
-
             if($db_pwd==$request->str_login_password){
 
                 if($request->rememberme===null){
@@ -429,6 +427,12 @@ class FrontController extends Controller
                 $request->session()->put('FRONT_USER_NAME',$result[0]->name);
                 $status="success";
                 $msg="";
+
+                $getUserTempId=getUserTempId();
+                DB::table('cart')
+                    ->where(['user_id'=>$getUserTempId,'user_type'=>'Not-Reg'])
+                    ->update(['user_id'=>$result[0]->id,'user_type'=>'Reg']);
+
             }else{
                 $status="error";
                 $msg="Please enter valid password";

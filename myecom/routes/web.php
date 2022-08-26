@@ -129,6 +129,7 @@ Route::get('logout', function () {
     session()->forget('FRONT_USER_LOGIN');
     session()->forget('FRONT_USER_ID');
     session()->forget('FRONT_USER_NAME');
+    session()->forget('USER_TEMP_ID');
     return redirect('/');
 });
 Route::get('/verification/{id}',[FrontController::class,'email_verification']);
