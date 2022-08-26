@@ -131,4 +131,5 @@ Route::get('logout', function () {
     session()->forget('FRONT_USER_NAME');
     return redirect('/');
 });
+Route::get('/verification/{id}',[FrontController::class,'email_verification']);
 //FRONT CONTROLLERS CODE END
