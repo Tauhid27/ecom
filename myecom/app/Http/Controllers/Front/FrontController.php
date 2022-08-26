@@ -445,6 +445,7 @@ class FrontController extends Controller
     {
         $result=DB::table('customers')
             ->where(['rand_id'=>$id])
+            ->where(['is_verify'=>0])
             ->get();
 
         if(isset($result[0])){
@@ -458,5 +459,59 @@ class FrontController extends Controller
     }
 
 
+    public function forgot_password(Request $request)
+    {
 
+        $result=DB::table('customers')
+            ->where(['email'=>$request->str_forgot_email])
+            ->get();
+        $rand_id=rand(111111111,999999999);
+        if(isset($result[0])){
+
+            DB::table('customers')
+                ->where(['email'=>$request->str_forgot_email])
+                ->update(['is_forgot_password'=>1,'rand_id'=>$rand_id]);
+
+            $data=['name'=>$result[0]->name,'rand_id'=>$rand_id];
+            $user['to']=$request->str_forgot_email;
+            Mail::send('front/forgot_email',$data,function($messages) use ($user){
+                $messages->to($user['to']);
+                $messages->subject("Forgot Password");
+            });
+            return response()->json(['status'=>'success','msg'=>'Please check your email for password']);
+        }else{
+            return response()->json(['status'=>'error','msg'=>'Email id not registered']);
+        }
+    }
+
+
+    public function forgot_password_change(Request $request,$id)
+    {
+        $result=DB::table('customers')
+            ->where(['rand_id'=>$id])
+            ->where(['is_forgot_password'=>1])
+            ->get();
+
+        if(isset($result[0])){
+            $request->session()->put('FORGOT_PASSWORD_USER_ID',$result[0]->id);
+
+            return view('front.forgot_password_change');
+        }else{
+            return redirect('/');
+        }
+    }
+
+    public function forgot_password_change_process(Request $request)
+    {
+        DB::table('customers')
+            ->where(['id'=>$request->session()->get('FORGOT_PASSWORD_USER_ID')])
+            ->update(
+                [
+                    'is_forgot_password'=>0,
+                    'password'=>Crypt::encrypt($request->password)   ,
+                    'rand_id'=>''
+                ]
+            );
+        return response()->json(['status'=>'success','msg'=>'Password changed']);
+    }
 }

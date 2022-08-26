@@ -522,3 +522,45 @@ jQuery(function($){
       }
     });
   });
+
+
+  function forgot_password(){
+    jQuery('#popup_forgot').show();
+    jQuery('#popup_login').hide();
+  }
+
+  function show_login_popup(){
+    jQuery('#popup_forgot').hide();
+    jQuery('#popup_login').show();
+  }
+
+  jQuery('#frmForgot').submit(function(e){
+    jQuery('#forgot_msg').html("Please wait...");
+
+    e.preventDefault();
+    jQuery.ajax({
+      url:'/forgot_password',
+      data:jQuery('#frmForgot').serialize(),
+      type:'post',
+      success:function(result){
+        console.log(result);
+        jQuery('#forgot_msg').html(result.msg);
+      }
+    });
+  });
+
+  jQuery('#frmUpdatePassword').submit(function(e){
+    jQuery('#thank_you_msg').html("Please wait...");
+    jQuery('#thank_you_msg').html("");
+    e.preventDefault();
+    jQuery.ajax({
+      url:'/forgot_password_change_process',
+      data:jQuery('#frmUpdatePassword').serialize(),
+      type:'post',
+      success:function(result){
+        console.log(result);
+        jQuery('#frmUpdatePassword')[0].reset();
+        jQuery('#thank_you_msg').html(result.msg);
+      }
+    });
+  });
