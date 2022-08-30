@@ -121,19 +121,24 @@
                         @endforeach
                       </tbody>
                       <tfoot>
+                        <tr class="hide show_coupon_box">
+                          <th>Coupon Code <a href="javascript:void(0)" onclick="remove_coupon_code()" class="remove_coupon_code_link">Remove</a></th>
+                          <td id="coupon_code_str"></td>
+                        </tr>
                          <tr>
                           <th>Total</th>
-                          <td>INR {{$totalPrice}}</td>
+                          <td id="total_price">INR {{$totalPrice}}</td>
                         </tr>
                       </tfoot>
                     </table>
                   </div>
-				  <h4>Coupon Code</h4>
-                  <div class="aa-payment-method coupon_code">                    
-                    <input type="text" placeholder="Coupon Code" class="aa-coupon-code">
-					<input type="submit" value="Apply Coupon" class="aa-browse-btn">              
-                  </div>
-				  <br/>
+                  <h4>Coupon Code</h4>
+                    <div class="aa-payment-method coupon_code">                    
+                      <input type="text" placeholder="Coupon Code" class="aa-coupon-code apply_coupon_code_box" name="coupon_code" id="coupon_code">
+                      <input type="button" value="Apply Coupon" class="aa-browse-btn apply_coupon_code_box" onclick="applyCouponCode()">   
+                      <div id="coupon_code_msg"></div>           
+                    </div>
+                  <br/>
                   <h4>Payment Method</h4>
                   <div class="aa-payment-method">                    
                     <label for="cashdelivery"><input type="radio" id="cashdelivery" name="optionsRadios"> Cash on Delivery </label>
@@ -144,11 +149,12 @@
                 </div>
               </div>
             </div>
+            @csrf  
           </form>
          </div>
        </div>
      </div>
    </div>
  </section>
-   
+ 
 @endsection
