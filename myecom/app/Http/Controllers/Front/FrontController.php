@@ -555,60 +555,10 @@ class FrontController extends Controller
 
     public function apply_coupon_code(Request $request)
     {
-        $totalPrice=0;
-        $result=DB::table('coupons')
-            ->where(['code'=>$request->coupon_code])
-            ->get();
+         $arr=apply_coupon_code($request->coupon_code);
+         $arr=json_decode($arr,true);
 
-        if(isset($result[0])){
-            $value=$result[0]->value;
-            $type=$result[0]->type;
-            $getAddToCartTotalItem=getAddToCartTotalItem();
-
-            foreach($getAddToCartTotalItem as $list){
-                $totalPrice=$totalPrice+($list->qty*$list->price);
-            }
-            if($result[0]->status==1){
-                if($result[0]->is_one_time==1){
-                    $status="error";
-                    $msg="Coupon code already used";
-                }else{
-                    $min_order_amt=$result[0]->min_order_amt;
-                    if($min_order_amt>0){
-
-                        if($min_order_amt<$totalPrice){
-                            $status="success";
-                            $msg="Coupon code applied";
-                        }else{
-                            $status="error";
-                            $msg="Cart amount must be greater then $min_order_amt";
-                        }
-                    }else{
-                         $status="success";
-                         $msg="Coupon code applied";
-                    }
-                }
-            }else{
-                $status="error";
-                $msg="Coupon code deactivated";
-            }
-
-        }else{
-           $status="error";
-           $msg="Please enter valid coupon code";
-        }
-
-
-        if($status=='success'){
-            if($type=='Value'){
-                $totalPrice=$totalPrice-$value;
-            }if($type=='Per'){
-                $newPrice=($value/100)*$totalPrice;
-                $totalPrice=round($totalPrice-$newPrice);
-            }
-        }
-
-        return response()->json(['status'=>$status,'msg'=>$msg,'totalPrice'=>$totalPrice]);
+         return response()->json(['status'=>$arr['status'],'msg'=>$arr['msg'],'totalPrice'=>$arr['totalPrice']]);
     }
 
     public function remove_coupon_code(Request $request)
@@ -624,6 +574,80 @@ class FrontController extends Controller
         }
 
         return response()->json(['status'=>'success','msg'=>'Coupon code removed','totalPrice'=>$totalPrice]);
+    }
+
+    public function place_order(Request $request)
+    {
+        if($request->session()->has('FRONT_USER_LOGIN')){
+            $coupon_value=0;
+            if($request->coupon_code!=''){
+                $arr=apply_coupon_code($request->coupon_code);
+                $arr=json_decode($arr,true);
+                if($arr['status']=='success'){
+                    $coupon_value=$arr['coupon_code_value'];
+                }else{
+                    return response()->json(['status'=>'false','msg'=>$arr['msg']]);
+                }
+            }
+
+
+            $uid=$request->session()->get('FRONT_USER_ID');
+            $totalPrice=0;
+            $getAddToCartTotalItem=getAddToCartTotalItem();
+            foreach($getAddToCartTotalItem as $list){
+                $totalPrice=$totalPrice+($list->qty*$list->price);
+            }
+            $arr=[
+                "customers_id"=>$uid,
+                "name"=>$request->name,
+                "email"=>$request->email,
+                "mobile"=>$request->mobile,
+                "address"=>$request->address,
+                "city"=>$request->city,
+                "state"=>$request->state,
+                "pincode"=>$request->zip,
+                "coupon_code"=>$request->coupon_code,
+                "coupon_value"=>$coupon_value,
+                "payment_type"=>$request->payment_type,
+                "payment_status"=>"Pending",
+                "total_amt"=>$totalPrice,
+                "order_status"=>1,
+                "added_on"=>date('Y-m-d h:i:s')
+            ];
+            $order_id=DB::table('orders')->insertGetId($arr);
+
+            if($order_id>0){
+                foreach($getAddToCartTotalItem as $list){
+                    $prductDetailArr['product_id']=$list->pid;
+                    $prductDetailArr['products_attr_id']=$list->attr_id;
+                    $prductDetailArr['price']=$list->price;
+                    $prductDetailArr['qty']=$list->qty;
+                    $prductDetailArr['orders_id']=$order_id;
+                    DB::table('orders_details')->insert($prductDetailArr);
+                }
+                DB::table('cart')->where(['user_id'=>$uid,'user_type'=>'Reg'])->delete();
+                $request->session()->put('ORDER_ID',$order_id);
+
+                $status="success";
+                $msg="Order placed";
+            }else{
+                $status="false";
+                $msg="Please try after sometime";
+            }
+        }else{
+            $status="false";
+            $msg="Please login to place order";
+        }
+        return response()->json(['status'=>$status,'msg'=>$msg]);
+    }
+
+    public function order_placed(Request $request)
+    {
+        if($request->session()->has('ORDER_ID')){
+            return view('front.order_placed');
+        }else{
+            return redirect('/');
+        }
     }
 
 }

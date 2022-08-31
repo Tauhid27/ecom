@@ -567,6 +567,7 @@ jQuery(function($){
 
   function applyCouponCode(){
     jQuery('#coupon_code_msg').html('');
+    jQuery('#order_place_msg').html('');
     var coupon_code=jQuery('#coupon_code').val();
     if(coupon_code!=''){
       jQuery.ajax({
@@ -614,3 +615,19 @@ jQuery(function($){
       });
     }
   }
+
+  jQuery('#frmPlaceOrder').submit(function(e){
+    jQuery('#order_place_msg').html("Please wait...");
+    e.preventDefault();
+    jQuery.ajax({
+      url:'/place_order',
+      data:jQuery('#frmPlaceOrder').serialize(),
+      type:'post',
+      success:function(result){
+        if(result.status=='success'){
+            window.location.href="/order_placed";
+        }
+        jQuery('#order_place_msg').html(result.msg);
+      }
+    });
+  });
