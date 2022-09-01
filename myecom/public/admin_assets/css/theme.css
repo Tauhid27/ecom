@@ -14649,3 +14649,12 @@ section {
 .vue-lists ul, .vue-lists ol {
     padding-left: 30px;
 }
+.whitebg{
+    background-color: white;
+    padding: 30px;
+}
+.order_operation{
+    margin-top: 15px;
+    background-color: white;
+    padding: 30px;
+}

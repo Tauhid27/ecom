@@ -6,11 +6,11 @@
 <section id="aa-catg-head-banner">
    <div class="aa-catg-head-banner-area">
      <div class="container">
-      
+
      </div>
    </div>
   </section>
-  <!-- / catg header banner section -->         
+  <!-- / catg header banner section -->
 
   <section id="cart-view">
    <div class="container">
@@ -19,7 +19,7 @@
         <div class="order_detail">
             <h3>Details Address</h3>
              {{$orders_details[0]->name}}({{$orders_details[0]->mobile}}) <br/>{{$orders_details[0]->address}}<br/>{{$orders_details[0]->city}}</br>{{$orders_details[0]->state}}</br/>{{$orders_details[0]->pincode}}
-          </div> 
+          </div>
       </div>
       <div class="col-md-6">
           <div class="order_detail">
@@ -32,16 +32,17 @@
                   echo 'Payment ID: '.$orders_details[0]->payment_id;
               }
              ?>
-             
-          </div> 
+          </div>
+          <b>Track Details</b><br/>
+          {{$orders_details[0]->track_details}}
       </div>
-     
+
 
        <div class="col-md-12">
          <div class="cart-view-area">
            <div class="cart-view-table">
              <form action="">
-             
+
                <div class="table-responsive">
                   <table class="table">
                     <thead>
@@ -56,11 +57,11 @@
                       </tr>
                     </thead>
                     <tbody>
-                     @php 
+                     @php
                      $totalAmt=0;
                      @endphp
                      @foreach($orders_details as $list)
-                     @php 
+                     @php
                      $totalAmt=$totalAmt+($list->price*$list->qty);
                      @endphp
                      <tr>
@@ -92,19 +93,19 @@
                           <td>'.$totalAmt.'</td>
                         </tr>';
                       }
-                      
-                      
+
+
                       ?>
                     </tbody>
                   </table>
                 </div>
              </form>
              <!-- Cart Total view -->
-           
+
 		   </div>
          </div>
        </div>
      </div>
    </div>
- </section> 
+ </section>
 @endsection
