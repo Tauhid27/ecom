@@ -65,10 +65,9 @@
               <!-- / header top left -->
               <div class="aa-header-top-right">
                 <ul class="aa-head-top-nav-right">
-                  <li><a href="{{url('/order')}}">My Order</a></li>
-
                   <li class="hidden-xs"><a href="{{url('/cart')}}">My Cart</a></li>
                   @if(session()->has('FRONT_USER_LOGIN')!=null)
+                  <li><a href="{{url('/order')}}">My Order</a></li>
                   <li><a href="{{url('/logout')}}">Logout</a></li>
                   @else
                     <li><a href="" data-toggle="modal" data-target="#login-modal">Login</a></li>
@@ -356,4 +355,3 @@
   <script src="{{asset('front_assets/js/custom.js')}}"></script>
   </body>
 </html>
-

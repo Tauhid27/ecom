@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\TaxController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\HomeBannerController;
+use App\Http\Controllers\Admin\OrderController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -94,14 +95,17 @@ Route::group(['middleware' => 'admin_auth'], function () {
     Route::get('admin/customer/show/{id}', [CustomerController::class, 'show']);
     Route::get('admin/customer/status/{status}/{id}', [CustomerController::class, 'status']);
 
-       //admin Banner  details
-       Route::get('admin/home_banner', [HomeBannerController::class, 'index']);
-       Route::get('admin/home_banner/manage_home_banner', [HomeBannerController::class, 'manage_home_banner']);
-       Route::get('admin/home_banner/manage_home_banner/{id}', [HomeBannerController::class, 'manage_home_banner']);
-       Route::post('admin/home_banner/manage_home_banner_process', [HomeBannerController::class, 'manage_home_banner_process'])->name('home_banner.manage_home_banner_process');
-       Route::get('admin/home_banner/delete/{id}', [HomeBannerController::class, 'delete']);
-       Route::get('admin/home_banner/status/{status}/{id}', [HomeBannerController::class, 'status']);
+    //admin Banner  details
+    Route::get('admin/home_banner', [HomeBannerController::class, 'index']);
+    Route::get('admin/home_banner/manage_home_banner', [HomeBannerController::class, 'manage_home_banner']);
+    Route::get('admin/home_banner/manage_home_banner/{id}', [HomeBannerController::class, 'manage_home_banner']);
+    Route::post('admin/home_banner/manage_home_banner_process', [HomeBannerController::class, 'manage_home_banner_process'])->name('home_banner.manage_home_banner_process');
+    Route::get('admin/home_banner/delete/{id}', [HomeBannerController::class, 'delete']);
+    Route::get('admin/home_banner/status/{status}/{id}', [HomeBannerController::class, 'status']);
 
+    //admin order details
+    Route::get('admin/order',[OrderController::class,'index']);
+    Route::get('admin/order_detail/{id}',[OrderController::class,'order_detail']);
 
     //admin login details
     // //how to encript password
@@ -116,15 +120,15 @@ Route::group(['middleware' => 'admin_auth'], function () {
 //ADMIN CONTROLLERS CODE END
 
 //FRONT CONTROLLERS CODE START
-Route::get('/',[FrontController::class,'index']);
-Route::get('product/{id}',[FrontController::class,'product']);
-Route::post('add_to_cart',[FrontController::class,'add_to_cart']);
-Route::get('cart',[FrontController::class,'cart']);
-Route::get('category/{id}',[FrontController::class,'category']);
-Route::get('search/{str}',[FrontController::class,'search']);
-Route::get('registration',[FrontController::class,'registration']);
-Route::post('registration_process',[FrontController::class,'registration_process'])->name('registration.registration_process');
-Route::post('login_process',[FrontController::class,'login_process'])->name('login.login_process');
+Route::get('/', [FrontController::class, 'index']);
+Route::get('product/{id}', [FrontController::class, 'product']);
+Route::post('add_to_cart', [FrontController::class, 'add_to_cart']);
+Route::get('cart', [FrontController::class, 'cart']);
+Route::get('category/{id}', [FrontController::class, 'category']);
+Route::get('search/{str}', [FrontController::class, 'search']);
+Route::get('registration', [FrontController::class, 'registration']);
+Route::post('registration_process', [FrontController::class, 'registration_process'])->name('registration.registration_process');
+Route::post('login_process', [FrontController::class, 'login_process'])->name('login.login_process');
 Route::get('logout', function () {
     session()->forget('FRONT_USER_LOGIN');
     session()->forget('FRONT_USER_ID');
@@ -132,19 +136,19 @@ Route::get('logout', function () {
     session()->forget('USER_TEMP_ID');
     return redirect('/');
 });
-Route::get('/verification/{id}',[FrontController::class,'email_verification']);
-Route::post('forgot_password',[FrontController::class,'forgot_password']);
-Route::get('/forgot_password_change/{id}',[FrontController::class,'forgot_password_change']);
-Route::post('forgot_password_change_process',[FrontController::class,'forgot_password_change_process']);
-Route::get('/checkout',[FrontController::class,'checkout']);
-Route::post('apply_coupon_code',[FrontController::class,'apply_coupon_code']);
-Route::post('remove_coupon_code',[FrontController::class,'remove_coupon_code']);
-Route::post('place_order',[FrontController::class,'place_order']);
-Route::get('/order_placed',[FrontController::class,'order_placed']);
-Route::get('/order_fail',[FrontController::class,'order_fail']);
-Route::get('/instamojo_payment_redirect',[FrontController::class,'instamojo_payment_redirect']);
-Route::group(['middleware'=>'user_auth'],function(){
-    Route::get('/order',[FrontController::class,'order']);
-    Route::get('/order_detail/{id}',[FrontController::class,'order_detail']);
+Route::get('/verification/{id}', [FrontController::class, 'email_verification']);
+Route::post('forgot_password', [FrontController::class, 'forgot_password']);
+Route::get('/forgot_password_change/{id}', [FrontController::class, 'forgot_password_change']);
+Route::post('forgot_password_change_process', [FrontController::class, 'forgot_password_change_process']);
+Route::get('/checkout', [FrontController::class, 'checkout']);
+Route::post('apply_coupon_code', [FrontController::class, 'apply_coupon_code']);
+Route::post('remove_coupon_code', [FrontController::class, 'remove_coupon_code']);
+Route::post('place_order', [FrontController::class, 'place_order']);
+Route::get('/order_placed', [FrontController::class, 'order_placed']);
+Route::get('/order_fail', [FrontController::class, 'order_fail']);
+Route::get('/instamojo_payment_redirect', [FrontController::class, 'instamojo_payment_redirect']);
+Route::group(['middleware' => 'user_auth'], function () {
+    Route::get('/order', [FrontController::class, 'order']);
+    Route::get('/order_detail/{id}', [FrontController::class, 'order_detail']);
 });
 //FRONT CONTROLLERS CODE END
