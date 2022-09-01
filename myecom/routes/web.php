@@ -143,4 +143,8 @@ Route::post('place_order',[FrontController::class,'place_order']);
 Route::get('/order_placed',[FrontController::class,'order_placed']);
 Route::get('/order_fail',[FrontController::class,'order_fail']);
 Route::get('/instamojo_payment_redirect',[FrontController::class,'instamojo_payment_redirect']);
+Route::group(['middleware'=>'user_auth'],function(){
+    Route::get('/order',[FrontController::class,'order']);
+    Route::get('/order_detail/{id}',[FrontController::class,'order_detail']);
+});
 //FRONT CONTROLLERS CODE END
