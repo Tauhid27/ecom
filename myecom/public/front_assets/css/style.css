@@ -4254,6 +4254,8 @@ body {
     color:red;
     font-size: 16px;
   }
+
+
   .order_detail{
     margin-bottom: 10px;
     font-weight: bold;
@@ -4272,4 +4274,13 @@ body {
 
   .order_id_btn a{
     color:white;
+  }
+
+  .rating_txt{
+    color:#ff6600;
+  }
+
+  .review_msg{
+    color:red;
+    font-size: 18px;
   }

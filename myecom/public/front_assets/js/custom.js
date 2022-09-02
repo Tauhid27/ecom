@@ -1,3 +1,29 @@
+/**
+  * Template Name: Daily Shop
+  * Version: 1.0
+  * Template Scripts
+  * Author: MarkUps
+  * Author URI: http://www.markups.io/
+
+  Custom JS
+
+
+  1. CARTBOX
+  2. TOOLTIP
+  3. PRODUCT VIEW SLIDER
+  4. POPULAR PRODUCT SLIDER (SLICK SLIDER)
+  5. FEATURED PRODUCT SLIDER (SLICK SLIDER)
+  6. LATEST PRODUCT SLIDER (SLICK SLIDER)
+  7. TESTIMONIAL SLIDER (SLICK SLIDER)
+  8. CLIENT BRAND SLIDER (SLICK SLIDER)
+  9. PRICE SLIDER  (noUiSlider SLIDER)
+  10. SCROLL TOP BUTTON
+  11. PRELOADER
+  12. GRID AND LIST LAYOUT CHANGER
+  13. RELATED ITEM SLIDER (SLICK SLIDER)
+
+
+**/
 
 jQuery(function($){
 
@@ -607,6 +633,31 @@ jQuery(function($){
 
         }
         jQuery('#order_place_msg').html(result.msg);
+      }
+    });
+  });
+
+
+  jQuery('#frmProductReview').submit(function(e){
+    //jQuery('#thank_you_msg').html("Please wait...");
+    //jQuery('#thank_you_msg').html("");
+    e.preventDefault();
+    jQuery.ajax({
+      url:'/product_review_process',
+      data:jQuery('#frmProductReview').serialize(),
+      type:'post',
+      success:function(result){
+        if(result.status=="success"){
+          jQuery('.review_msg').html(result.msg);
+          jQuery('#frmProductReview')[0].reset();
+          setInterval(function(){
+            window.location.href=window.location.href
+          },3000);
+        }if(result.status=="error"){
+          jQuery('.review_msg').html(result.msg)
+        }
+        //jQuery('#frmUpdatePassword')[0].reset();
+        //jQuery('#thank_you_msg').html(result.msg);
       }
     });
   });
