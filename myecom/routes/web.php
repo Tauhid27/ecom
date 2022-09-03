@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\TaxController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\HomeBannerController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\ProductReviewController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -109,6 +110,10 @@ Route::group(['middleware' => 'admin_auth'], function () {
     Route::post('admin/order_detail/{id}',[OrderController::class,'update_track_detail']);
     Route::get('admin/update_payemnt_status/{status}/{id}',[OrderController::class,'update_payemnt_status']);
     Route::get('admin/update_order_status/{status}/{id}',[OrderController::class,'update_order_status']);
+
+    //admin product review
+    Route::get('admin/product_review',[ProductReviewController::class,'index']);
+    Route::get('admin/update_product_review_status/{status}/{id}',[ProductReviewController::class,'update_product_review_status']);
 
     //admin login details
     // //how to encript password
