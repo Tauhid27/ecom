@@ -6,11 +6,11 @@
 <section id="aa-catg-head-banner">
    <div class="aa-catg-head-banner-area">
      <div class="container">
-
+      
      </div>
    </div>
   </section>
-  <!-- / catg header banner section -->
+  <!-- / catg header banner section -->         
 
   <section id="cart-view">
    <div class="container">
@@ -52,7 +52,7 @@
                       @endforeach
                       <tr>
                         <td colspan="6" class="aa-cart-view-bottom">
-
+                          
                           <a class="aa-cartbox-checkout aa-primary-btn" href="{{url('/checkout')}}"><input class="aa-cart-view-btn" type="button" value="Checkout"></a>
                         </td>
                       </tr>
@@ -61,22 +61,22 @@
                 </div>
                 @else
                   <h3>Cart empty</h3>
-                @endif
+                @endif  
              </form>
              <!-- Cart Total view -->
-
+           
 		   </div>
          </div>
        </div>
      </div>
    </div>
- </section>
+ </section>   
  <input type="hidden" id="qty" value="1"/>
   <form id="frmAddToCart">
     <input type="hidden" id="size_id" name="size_id"/>
     <input type="hidden" id="color_id" name="color_id"/>
     <input type="hidden" id="pqty" name="pqty"/>
-    <input type="hidden" id="product_id" name="product_id"/>
+    <input type="hidden" id="product_id" name="product_id"/>           
     @csrf
-  </form>
+  </form>  
 @endsection

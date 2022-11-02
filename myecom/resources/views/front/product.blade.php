@@ -10,7 +10,7 @@
       <div class="aa-catg-head-banner-content">
         <h2>T-Shirt</h2>
         <ol class="breadcrumb">
-          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html">Home</a></li>         
           <li><a href="#">Product</a></li>
           <li class="active">T-shirt</li>
         </ol>
@@ -29,27 +29,27 @@
             <div class="aa-product-details-content">
               <div class="row">
                 <!-- Modal view slider -->
-                <div class="col-md-5 col-sm-5 col-xs-12">
-                  <div class="aa-product-view-slider">
+                <div class="col-md-5 col-sm-5 col-xs-12">                              
+                  <div class="aa-product-view-slider">                                
                     <div id="demo-1" class="simpleLens-gallery-container">
                       <div class="simpleLens-container">
                         <div class="simpleLens-big-image-container"><a data-lens-image="{{asset('storage/media/'.$product[0]->image)}}" class="simpleLens-lens-image"><img src="{{asset('storage/media/'.$product[0]->image)}}" class="simpleLens-big-image"></a></div>
                       </div>
                       <div class="simpleLens-thumbnails-container">
                           <a data-big-image="{{asset('storage/media/'.$product[0]->image)}}" data-lens-image="{{asset('storage/media/'.$product[0]->image)}}" class="simpleLens-thumbnail-wrapper" href="#"><img src="{{asset('storage/media/'.$product[0]->image)}}" width="70px">
-                          </a>
+                          </a>   
 
                           @if(isset($product_images[$product[0]->id][0]))
 
                             @foreach($product_images[$product[0]->id] as $list)
-
+                            
                             <a data-big-image="{{asset('storage/media/'.$list->images)}}" data-lens-image="{{asset('storage/media/'.$list->images)}}" class="simpleLens-thumbnail-wrapper" href="#"><img src="{{asset('storage/media/'.$list->images)}}" width="70px">
-                            </a>
-
+                            </a>  
+                            
                             @endforeach
 
                           @endif
-
+                                                   
                       </div>
                     </div>
                   </div>
@@ -68,7 +68,7 @@
                        <p class="lead_time">
                        {{$product[0]->lead_time}}
                        </p>
-                       @endif
+                       @endif 
 
                     </div>
                     <p>
@@ -82,35 +82,35 @@
                       $arrSize=[];
                       foreach($product_attr[$product[0]->id] as $attr){
                         $arrSize[]=$attr->size;
-                      }
+                      }  
                       $arrSize=array_unique($arrSize);
-
+                     
                     @endphp
-                    @foreach($arrSize as $attr)
+                    @foreach($arrSize as $attr)  
 
                     @if($attr!='')
                       <a href="javascript:void(0)" onclick="showColor('{{$attr}}')" id="size_{{$attr}}" class="size_link">{{$attr}}</a>
-                      @endif
+                      @endif  
 
-                      @endforeach
+                      @endforeach  
                     </div>
                     @endif
-
-
+                    
+                    
                     @if($product_attr[$product[0]->id][0]->color_id>0)
-
+                    
                     <h4>Color</h4>
                     <div class="aa-color-tag">
-                      @foreach($product_attr[$product[0]->id] as $attr)
-
+                      @foreach($product_attr[$product[0]->id] as $attr)  
+                      
                       @if($attr->color!='')
 
                       <a href="javascript:void(0)" class="aa-color-{{strtolower($attr->color)}} product_color size_{{$attr->size}}"  onclick=change_product_color_image("{{asset('storage/media/'.$attr->attr_image)}}","{{$attr->color}}")></a>
-                      @endif
+                      @endif  
 
-                      @endforeach
+                      @endforeach  
                     </div>
-                    @endif
+                    @endif    
 
                     <div class="aa-prod-quantity">
                       <form action="">
@@ -138,7 +138,7 @@
                 <li><a href="#technical_specification" data-toggle="tab">Technical Specification</a></li>
                 <li><a href="#uses" data-toggle="tab">Uses</a></li>
                 <li><a href="#warranty" data-toggle="tab">Warranty</a></li>
-                <li><a href="#review" data-toggle="tab">Reviews</a></li>
+                <li><a href="#review" data-toggle="tab">Reviews</a></li>                
               </ul>
 
               <!-- Tab panes -->
@@ -157,12 +157,12 @@
                 </div>
                 <div class="tab-pane fade " id="review">
                  <div class="aa-product-review-area">
-                 @if(isset($product_review[0]))
+                 @if(isset($product_review[0]))    
                    <h4>
-                   @php
+                   @php  
                       echo count($product_review);
                    @endphp
-                    Review(s) for {{$product[0]->name}}</h4>
+                    Review(s) for {{$product[0]->name}}</h4> 
                    <ul class="aa-review-nav">
                      @foreach($product_review as $list)
                      <li>
@@ -195,26 +195,26 @@
                      </select>
                    </div>
                    <!-- review form -->
-
+                   
                       <div class="form-group">
                         <label for="message">Your Review</label>
                         <textarea class="form-control" rows="3"  name="review" required></textarea>
                       </div>
-
+                      
                       <button type="submit" class="btn btn-default aa-review-submit">Submit</button>
                       <input type="hidden" name="product_id" value="{{$product[0]->id}}"/>
                       @csrf
                    </form>
                    <div class="review_msg"></div>
                  </div>
-                </div>
+                </div>            
               </div>
             </div>
             <!-- Related product -->
             <div class="aa-product-related-item">
               <h3>Related Products</h3>
               <ul class="aa-product-catg aa-related-item-slider">
-
+               
               @if(isset($related_product[0]))
                     @foreach($related_product as $productArr)
                     <li>
@@ -225,20 +225,20 @@
                             <h4 class="aa-product-title"><a href="{{url('product/'.$productArr->slug)}}">{{$productArr->name}}</a></h4>
                             <span class="aa-product-price">Rs {{$related_product_attr[$productArr->id][0]->price}}</span><span class="aa-product-price"><del>Rs {{$related_product_attr[$productArr->id][0]->mrp}}</del></span>
                         </figcaption>
-                        </figure>
-                    </li>
-                    @endforeach
+                        </figure>                          
+                    </li>  
+                    @endforeach    
                     @else
                     <li>
                         <figure>
                         No data found
                         <figure>
                     <li>
-                    @endif
-
-
+                    @endif      
+                
+                                 
               </ul>
-            </div>
+            </div>  
           </div>
         </div>
       </div>
@@ -248,7 +248,7 @@
     <input type="hidden" id="size_id" name="size_id"/>
     <input type="hidden" id="color_id" name="color_id"/>
     <input type="hidden" id="pqty" name="pqty"/>
-    <input type="hidden" id="product_id" name="product_id"/>
+    <input type="hidden" id="product_id" name="product_id"/>           
     @csrf
   </form>
 @endsection
